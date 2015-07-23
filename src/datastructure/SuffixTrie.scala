@@ -65,8 +65,8 @@ class SuffixTrie(str: String) {
 	}
 
 	private def toSubStringAppearFrequencyMap(map: Map[String, Int], node: TreeNode, prefix: String) {
-		if(!prefix.equals(""))
-		map += ((prefix, node.traffic));
+		if (!prefix.equals(""))
+			map += ((prefix, node.traffic));
 		for (c <- node.children.keySet.toArray.sorted)
 			toSubStringAppearFrequencyMap(map, node.children(c), prefix + c);
 	}
@@ -74,22 +74,28 @@ class SuffixTrie(str: String) {
 
 object SuffixTrie {
 	def main(args: Array[String]): Unit = {
-//		var str = "aabababaabaaabaabbabbabbbabababbabaabaaaababbaabaaaabababaababaaababaaababaaababaabbaaabaaababbabababababaababaabababababaaaaabababaaaabbaabaaaabaaaaababaabababaaababaabbabbabaabbabbaababababaabaabaabababaaabbbabbabababababbaaababaaababaaabababaabbabababbababaabaaaababababababababaaabaababaaaabbbabaaabaaabababaaaabababababaabababaabababaabbbaaaabababaaabbabaabaababaababababaabababbaababbabaaabaabababaaaabaaabaababaabaabaabaaaaaaaaababaaabaaababbababbaababababaababaaaaaaabaabababaabbabababababbabaabababababababaababaababaabaabaabaaababababbbabaaaaabaaabababaaaabbaaaababaaababaaaababaababababaabaababaababaababaaababbaababaaaaabababaabababbbabababaaababaabaabaababaaabababaababaabababbabbaaaaababbbabaababbaababbabaababaaaabaaaabaabbabaababababababbabaabbabaababaabaabaaaaabaabaaabaaaababaaabaaabaabababaababaabaaababbaabaababaaabababaabaabaababaabaababababaaabaababaaababaababaaaabaababababababbbabaababaabaababaababbabaababbabababaabaaabababbababaaaaaabababaaababaababababbabaabbabaaaabababaaababaabaaabababababababaabaababaabbaaaabbaababababaabaaabaabaabababababaaababaaababaababaaababaaabbabaababaabababaabaabababababaabababbaaababababaaba";
-		var str = "ababcababd";
+		println(scala.collection.mutable.Set.empty[Int].map(x => x).max);		
+	}
+
+	def main1(args: Array[String]): Unit = {
+		//		var str = "aabababaabaaabaabbabbabbbabababbabaabaaaababbaabaaaabababaababaaababaaababaaababaabbaaabaaababbabababababaababaabababababaaaaabababaaaabbaabaaaabaaaaababaabababaaababaabbabbabaabbabbaababababaabaabaabababaaabbbabbabababababbaaababaaababaaabababaabbabababbababaabaaaababababababababaaabaababaaaabbbabaaabaaabababaaaabababababaabababaabababaabbbaaaabababaaabbabaabaababaababababaabababbaababbabaaabaabababaaaabaaabaababaabaabaabaaaaaaaaababaaabaaababbababbaababababaababaaaaaaabaabababaabbabababababbabaabababababababaababaababaabaabaabaaababababbbabaaaaabaaabababaaaabbaaaababaaababaaaababaababababaabaababaababaababaaababbaababaaaaabababaabababbbabababaaababaabaabaababaaabababaababaabababbabbaaaaababbbabaababbaababbabaababaaaabaaaabaabbabaababababababbabaabbabaababaabaabaaaaabaabaaabaaaababaaabaaabaabababaababaabaaababbaabaababaaabababaabaabaababaabaababababaaabaababaaababaababaaaabaababababababbbabaababaabaababaababbabaababbabababaabaaabababbababaaaaaabababaaababaababababbabaabbabaaaabababaaababaabaaabababababababaabaababaabbaaaabbaababababaabaaabaabaabababababaaababaaababaababaaababaaabbabaababaabababaabaabababababaabababbaaababababaaba";
+		//		var str = "ababcababd";
+		var str = "ababa"
+
 		val t0 = compat.Platform.currentTime;
-		
-		val st: SuffixTrie = new SuffixTrie("abbac");
+
+		val st: SuffixTrie = new SuffixTrie(str);
 		st.display()
-//		val m1 = st.toSubStringAppearFrequencyMap();
-		
+		//		val m1 = st.toSubStringAppearFrequencyMap();
+
 		val t1 = compat.Platform.currentTime;
 		println((t1 - t0) + "ms")
-		val m2 = (1 to str.length()).map(len => (0 to str.length() - len).map(i => (str.substring(i, i+len),1))//
-				.groupBy(_._1).map(x => (x._1, x._2.map(_._2).sum))).flatten.toMap;
-		
+		val m2 = (1 to str.length()).map(len => (0 to str.length() - len).map(i => (str.substring(i, i + len), 1)) //
+			.groupBy(_._1).map(x => (x._1, x._2.map(_._2).sum))).flatten.toMap;
+
 		val t2 = compat.Platform.currentTime;
 		println(m2);
 		println((t2 - t1) + "ms")
-//		st.display();
+		//		st.display();
 	}
 }
