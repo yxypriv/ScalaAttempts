@@ -3,8 +3,8 @@ package datastructure
 /**
  * @author xingyan
  */
-class StringMatch {
-	
+object StringMatch {
+
 	/**
 	 * O(n)
 	 */
@@ -21,11 +21,13 @@ class StringMatch {
 		}
 		return result;
 	}
-	
+
 	/**
+	 * buildSuffixLongestCommonPrefixLengthArray
 	 * O(n)
+	 * Z-Algorithm
 	 */
-	def substringPrefixLength(str: String): Array[Long] = {
+	def buildSuffixLCPLengthArray(str: String): Array[Long] = {
 		val result = new Array[Long](str.length());
 		var start = 0;
 		var interval = 0;
@@ -52,5 +54,36 @@ class StringMatch {
 		}
 		result(0) = str.length();
 		return result;
+	}
+	
+	def buildPLCArray(str:String) : Array[Int] = {
+		val subStrings = (0 to str.length()-1).map(i => (i, str.substring(i))).sortBy(_._2);
+		println(subStrings)
+		val plcArray = new Array[Int](str.length());
+		var curCommonLength = 0;
+		(0 to str.length()-1).foreach{i => 
+			if(i == 0)
+				plcArray(i) = -1;
+			else {
+				var curSubString = subStrings(i)._2;
+				var preSubString = subStrings(i-1)._2;
+				if(curSubString(0) != preSubString(0))
+					curCommonLength = 0;
+				else {
+					var compareLength = math.min(curSubString.length(), preSubString.length());
+					while(i+curCommonLength < compareLength &&  
+							curSubString(i+curCommonLength) == preSubString(i+curCommonLength))
+						curCommonLength+=1;
+				}
+				plcArray(i) = curCommonLength;
+			}
+		}
+		return plcArray;
+	}
+}
+
+object StringMatchTest {
+	def main(args: Array[String]): Unit = {
+		println(StringMatch.buildPLCArray("banana").mkString(","));
 	}
 }
